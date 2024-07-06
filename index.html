@@ -1,38 +1,36 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Demo</title>
-    <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
-    <link href="//unpkg.com/layui@2.9.13/dist/css/layui.css" rel="stylesheet" />
-  </head>
-  <body class="layui-padding-3">
-    <div class="layui-tab layui-tab-card">
-      <ul class="layui-tab-title">
-        <li class="layui-this">标签1</li>
-        <li lay-filter="add-depend-tab">新增依赖</li>
-        <li>标签3</li>
-        <li>标签4</li>
-        <li>标签5</li>
-      </ul>
-      <div class="layui-tab-content">
-        <div class="layui-tab-item layui-show">内容-1</div>
-        <div
-          class="layui-tab-item"
-          lay-filter="add-depend-context"
-          id="add-depend-context"
-        >
-          内容-2
-        </div>
-        <div class="layui-tab-item">内容-3</div>
-        <div class="layui-tab-item">内容-4</div>
-        <div class="layui-tab-item">内容-5</div>
-      </div>
-    </div>
+<html lang="zh-CN">
 
-    <!-- add-depend-context模板 -->
-    <script id="temp-add-depend-form" type="text/html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo</title>
+  <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+  <link href="//unpkg.com/layui@2.9.13/dist/css/layui.css" rel="stylesheet">
+</head>
+
+<body class="layui-padding-3">
+  <div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+      <li class="layui-this">标签1</li>
+      <li lay-filter="add-depend-tab">新增依赖</li>
+      <li>标签3</li>
+      <li>标签4</li>
+      <li>标签5</li>
+    </ul>
+    <div class="layui-tab-content">
+      <div class="layui-tab-item layui-show">内容-1</div>
+      <div class="layui-tab-item" lay-filter="add-depend-context" id="add-depend-context">
+        内容-2
+      </div>
+      <div class="layui-tab-item">内容-3</div>
+      <div class="layui-tab-item">内容-4</div>
+      <div class="layui-tab-item">内容-5</div>
+    </div>
+  </div>
+
+  <!-- add-depend-context模板 -->
+  <script id="temp-add-depend-form" type="text/html">
       <form
         class="layui-form layui-form-pane"
         action=""
@@ -58,101 +56,102 @@
       </form>
     </script>
 
-    <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-    <script src="//unpkg.com/layui@2.9.13/dist/layui.js"></script>
-    <script>
-      // AddDepend中的方法暂时写在这
-      layui.define(['jquery', 'form', 'layer'], function (exports) {
-        var $ = layui.jquery;
-        var form = layui.form;
-        var layer = layui.layer;
-        // 定义多个方法
-        var AddDepend = {
-          open_fields_alert: function (data) {
-            console.log(111)
-            console.log(data)
-            layer.open({
-              type: 1,
-              // area: ['420px', '240px'], // 宽高
-              content: '<div style="padding: 16px;">任意 HTML 内容</div>'
-            });
-          },
-        };
-        // 输出模块字段
-        exports('AddDepend', AddDepend);
-      });
+  <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+  <script src="//unpkg.com/layui@2.9.13/dist/layui.js"></script>
+  <script>
+    // AddDepend中的方法暂时写在这
+    layui.define(['jquery', 'form', 'layer'], function (exports) {
+      var $ = layui.jquery;
+      var form = layui.form;
+      var layer = layui.layer;
+      // 定义多个方法
+      var AddDepend = {
+        open_fields_alert: function (data) {
+          console.log(111)
+          console.log(data)
+          layer.open({
+            type: 1,
+            // area: ['420px', '240px'], // 宽高
+            content: '<div style="padding: 16px;">任意 HTML 内容</div>'
+          });
+        },
+      };
+      // 输出模块字段
+      exports('AddDepend', AddDepend);
+    });
 
-      // CurrentUnits中的方法暂时写在这
-      layui.define(['jquery', 'form', 'AddDepend', 'layer'], function (exports) {
-        var $ = layui.jquery;
-        var form = layui.form;
-        var add_depend = layui.AddDepend;
-        var layer = layui.layer;
-        // 定义多个方法
-        var CurrentUnits = {
-          get_csv_name: function () {
-            return {
-              csv_en_name1: 'csv_cn_name1',
-              csv_en_name2: 'csv_cn_name2',
+    // CurrentUnits中的方法暂时写在这
+    layui.define(['jquery', 'form', 'AddDepend', 'layer'], function (exports) {
+      var $ = layui.jquery;
+      var form = layui.form;
+      var add_depend = layui.AddDepend;
+      var layer = layui.layer;
+      // 定义多个方法
+      var CurrentUnits = {
+        get_csv_name: function () {
+          return {
+            csv_en_name1: 'csv_cn_name1',
+            csv_en_name2: 'csv_cn_name2',
+          };
+        },
+        on_table_select_change: function (table_name, do_something) {
+          var select_str = 'select(' + table_name + ')';
+          form.on(select_str, function (data) {
+            select_data = {
+              text: null,
+              value: null,
             };
-          },
-          on_table_select_change: function (table_name, do_something) {
-            var select_str = 'select(' + table_name + ')';
-            form.on(select_str, function (data) {
-              select_data = {
-                text: null,
-                value: null,
-              };
-              select_data['text'] = this.innerHTML;
-              select_data['value'] = data.value;
-              do_something(select_data);
-            });
-          },
-          get_fields_data: function () {
-            $.ajax({
-              type: 'GET',
-              url: 'https://jsonplaceholder.typicode.com/posts',
-              dataType: 'json',
-              success: function (response) {
-                add_depend.open_fields_alert(response)
-              },
-              error: function (xhr, status, error) {},
-            });
-          },
-        };
-        // 输出模块字段
-        exports('CurrentUnits', CurrentUnits);
-      });
+            select_data['text'] = this.innerHTML;
+            select_data['value'] = data.value;
+            do_something(select_data);
+          });
+        },
+        get_fields_data: function () {
+          $.ajax({
+            type: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/posts',
+            dataType: 'json',
+            success: function (response) {
+              add_depend.open_fields_alert(response)
+            },
+            error: function (xhr, status, error) { },
+          });
+        },
+      };
+      // 输出模块字段
+      exports('CurrentUnits', CurrentUnits);
+    });
 
-      layui.use(['CurrentUnits', 'AddDepend'], function () {
-        var laytpl = layui.laytpl;
-        var form = layui.form;
-        var $ = layui.jquery;
-        var units = layui.CurrentUnits;
-        var add_depend = layui.AddDepend;
-        CSVNAMES = null;
-        FIRST_TABLE = {
-          text: null,
-          value: null,
-        };
-        if (!CSVNAMES) {
-          CSVNAMES = units.get_csv_name();
-        }
-        var temp_add_depend_form = document.getElementById(
-          'temp-add-depend-form'
-        ).innerHTML; // 获取模板字符
-        var add_depend_context = document.getElementById('add-depend-context'); // 视图对象
-        // 渲染并输出结果
-        laytpl(temp_add_depend_form).render(CSVNAMES, function (str) {
-          add_depend_context.innerHTML = str;
-        });
-        // 只渲染filter为add-depend-form的form，第一个参数为elem的类型如select，不填则所有都渲染
-        form.render(null, 'add-depend-form');
-        units.on_table_select_change(
-          'first-table-select',
-          units.get_fields_data
-        );
+    layui.use(['CurrentUnits', 'AddDepend'], function () {
+      var laytpl = layui.laytpl;
+      var form = layui.form;
+      var $ = layui.jquery;
+      var units = layui.CurrentUnits;
+      var add_depend = layui.AddDepend;
+      CSVNAMES = null;
+      FIRST_TABLE = {
+        text: null,
+        value: null,
+      };
+      if (!CSVNAMES) {
+        CSVNAMES = units.get_csv_name();
+      }
+      var temp_add_depend_form = document.getElementById(
+        'temp-add-depend-form'
+      ).innerHTML; // 获取模板字符
+      var add_depend_context = document.getElementById('add-depend-context'); // 视图对象
+      // 渲染并输出结果
+      laytpl(temp_add_depend_form).render(CSVNAMES, function (str) {
+        add_depend_context.innerHTML = str;
       });
-    </script>
-  </body>
+      // 只渲染filter为add-depend-form的form，第一个参数为elem的类型如select，不填则所有都渲染
+      form.render(null, 'add-depend-form');
+      units.on_table_select_change(
+        'first-table-select',
+        units.get_fields_data
+      );
+    });
+  </script>
+</body>
+
 </html>
